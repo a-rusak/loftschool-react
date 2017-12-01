@@ -1,0 +1,23 @@
+.component-list {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+
+}
+
+.component-list__name {
+  margin-right: 10px;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+.component-list__name:hover {
+  background-color: #eee;
+}
+.component-list__name.is-active {
+  background-color: #333;
+  color: white;
+}
+.component-wrapper {
+  padding: 20px 40px;
+}
