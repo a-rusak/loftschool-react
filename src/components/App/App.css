@@ -6,3 +6,11 @@
   align-self: flex-start;
   align-items: flex-start;
 }
+
+dl {
+  display: flex;
+  margin: 0.5em 0;
+}
+dt {
+  flex-basis: 40%;
+}
