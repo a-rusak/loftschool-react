@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Market from '../Market';
 import Budget from '../Budget';
-import '../Order/Order.css';
+import Farm from '../Farm';
 import './App.css';
 
 export default class App extends PureComponent {
@@ -10,6 +10,7 @@ export default class App extends PureComponent {
     return (
       <div className="app">
         <Market />
+        <Farm />
         <Budget />
       </div>
     );

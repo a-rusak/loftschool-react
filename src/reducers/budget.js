@@ -1,4 +1,5 @@
 import { CREATE_ORDER, MOVE_ORDER_TO_FARM } from '../actions/marketTypes';
+import { MOVE_ORDER_TO_CUSTOMER } from '../actions/farmTypes';
 
 export default (
   state = {
@@ -20,6 +21,11 @@ export default (
       return {
         ...state,
         farmExpense: state.farmExpense + 100
+      };
+    case MOVE_ORDER_TO_CUSTOMER:
+      return {
+        ...state,
+        deliveryExpense: state.deliveryExpense + 20
       };
     default:
       return state;

@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { createOrder, moveOrderToFarm } from '../../actions/marketActions';
 import { getOrders } from '../../reducers/market';
+import Order from '../Order';
 import './Market.css';
 
 import { connect } from 'react-redux';
@@ -33,7 +34,7 @@ const getNewOrder = () => {
   };
 };
 
-export class Market extends Component {
+export class Market extends PureComponent {
   onCreate = () => {
     const { createOrder } = this.props;
     const order = getNewOrder();
@@ -57,25 +58,7 @@ export class Market extends Component {
         </button>
         <button onClick={this.onSend}>Отправить заказ на ферму</button>
         <ul className="order-list">
-          {orders.map(order => {
-            const { id, name, price, createdAt } = order;
-            return (
-              <li className="order order-item" key={id}>
-                <dl>
-                  <dt>Название:</dt>
-                  <dd>{name}</dd>
-                </dl>
-                <dl>
-                  <dt>Цена:</dt>
-                  <dd>{price}</dd>
-                </dl>
-                <dl>
-                  <dt>Создан:</dt>
-                  <dd>{createdAt}</dd>
-                </dl>
-              </li>
-            );
-          })}
+          {orders.map(order => <Order key={order.id} order={order} />)}
         </ul>
       </div>
     );
