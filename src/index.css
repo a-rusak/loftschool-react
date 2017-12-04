@@ -1,5 +1,34 @@
 body {
+  padding: 1em;
+  background-color: #222;
+  color: #aaa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1.2rem;
+}
+
+input,
+button {
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0.5em 1em;
   margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+}
+
+input {
+  color: inherit;
+  background-color: #555;
+  outline: none;
+  border: 1px solid #777;
+}
+
+a {
+  color: #fff;
+}
+
+body {
+  box-sizing: border-box;
+}
+body * {
+  box-sizing: inherit;
 }
