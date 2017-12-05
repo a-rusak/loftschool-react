@@ -1,7 +1,12 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { request, success, failure } from '../../actions/search';
-import { getShows, getIsFetched } from '../../reducers/search';
+import {
+  getShows,
+  getIsFetched,
+  getIsFetching,
+  getError
+} from '../../reducers/search';
 import { Link } from 'react-router-dom';
 import './Search.css';
 
@@ -23,7 +28,11 @@ class Search extends PureComponent {
   };
 
   render() {
-    const { searchResult: { shows }, isFetched } = this.props;
+    const { shows, error, isFetched, isFetching } = this.props;
+
+    if (error !== null) {
+      return <p style={{ color: 'red' }}>Ошибка! {error}</p>;
+    }
 
     return (
       <main>
@@ -40,6 +49,11 @@ class Search extends PureComponent {
           </button>
         </section>
         <ul className="show-list">
+          {isFetching && (
+            <li>
+              <p>Идет загрузка</p>
+            </li>
+          )}
           {isFetched &&
             shows.map(show => {
               const { name, image, id, summary } = show;
@@ -70,8 +84,10 @@ class Search extends PureComponent {
   }
 }
 const mapStateToProps = state => ({
-  searchResult: getShows(state),
-  isFetched: getIsFetched(state)
+  shows: getShows(state),
+  error: getError(state),
+  isFetched: getIsFetched(state),
+  isFetching: getIsFetching(state)
 });
 
 const mapDispatchToProps = {

@@ -3,10 +3,11 @@ import { search } from '../api';
 
 export default store => next => action => {
   if (action.type === request.toString()) {
-    console.log(action.payload.query);
-    search(action.payload.query)
+    search(action.payload)
       .then(result => {
-        store.dispatch(success(result));
+        setTimeout(()=>{
+          store.dispatch(success(result));
+        }, 1000);
       })
       .catch(error => {
         store.dispatch(failure(error));
@@ -14,5 +15,3 @@ export default store => next => action => {
   }
   return next(action);
 };
-
-// export default middleware;
