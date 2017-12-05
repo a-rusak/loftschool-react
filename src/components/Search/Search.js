@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { request, success, failure } from '../../actions/search';
+import { request } from '../../actions/search';
 import {
+  getQuery,
   getShows,
   getIsFetched,
   getIsFetching,
@@ -12,7 +13,7 @@ import './Search.css';
 
 class Search extends PureComponent {
   state = {
-    value: `day`
+    value: this.props.query
   };
 
   onSearch = evt => {
@@ -66,7 +67,7 @@ class Search extends PureComponent {
                         ? image.medium
                         : `http://via.placeholder.com/210x295/000000?text=No+Image`
                     }
-                    alt=""
+                    alt={name}
                   />
                   <h2>
                     <Link to={`/shows/${id}`}>{name}</Link>
@@ -84,6 +85,7 @@ class Search extends PureComponent {
   }
 }
 const mapStateToProps = state => ({
+  query: getQuery(state),
   shows: getShows(state),
   error: getError(state),
   isFetched: getIsFetched(state),

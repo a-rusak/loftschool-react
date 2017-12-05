@@ -1,49 +1,70 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { request, success, failure } from '../../actions/show';
+import { Link } from 'react-router-dom';
+import { request } from '../../actions/show';
 import {
   getShow,
   getIsFetched,
   getIsFetching,
   getError
 } from '../../reducers/show';
+import './ShowPage.css';
 
 class Show extends PureComponent {
   render() {
-    const { name, summary, image } = this.props.show;
+    const { name, summary, image, _embedded: { cast } } = this.props.show;
+
     return (
-      <article style={{ display: `grid`, gridTemplateColumns: `12em` }}>
-        <img
-          className="show-item__image"
-          src={
-            image
-              ? image.medium
-              : `http://via.placeholder.com/210x295/000000?text=No+Image`
-          }
-          alt=""
-        />
-        <section className="text">
-          <h1>{name}</h1>
-          <div
-            className="show-item__summary"
-            dangerouslySetInnerHTML={{ __html: summary }}
+      <div className="ShowPage">
+        <Link to="/"><span role="img" aria-label="Back to list">🔙</span> Back to list</Link>
+        <article className="title">
+          <img
+            className="show-item__image"
+            src={
+              image
+                ? image.medium
+                : `http://via.placeholder.com/210x295/000000?text=No+Image`
+            }
+            alt=""
           />
-        </section>
-      </article>
+          <section className="text">
+            <h1>{name}</h1>
+            <div
+              className="show-item__summary"
+              dangerouslySetInnerHTML={{ __html: summary }}
+            />
+          </section>
+        </article>
+        <ul className="show-list">
+          {cast.map((person, index) => {
+            const { person: { name, image, id }, character } = person;
+            return (
+              <li className="show-item" key={`person_${id}_${index}`}>
+                <img
+                  className="show-item__image"
+                  src={
+                    image
+                      ? image.medium
+                      : `http://via.placeholder.com/210x295/000000?text=No+Image`
+                  }
+                  alt={name}
+                />
+                <h3>{name}</h3>
+                <h4>{character.name}</h4>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     );
   }
 }
 
 class ShowPage extends PureComponent {
   componentDidMount() {
-    const {
-      isFetched,
-      isFetching,
-      request,
-      match: { params: { id } }
-    } = this.props;
+    const { isFetching, request, match: { params: { id } } } = this.props;
 
-    if (!isFetched && !isFetching) {
+    if (!isFetching) {
       request(id);
     }
   }
